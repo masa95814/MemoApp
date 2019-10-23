@@ -5,5 +5,11 @@
         "jsx-a11y",
         "import"
     ],
+    "rules": {
+        "no-use-before-define": 0,
+        "react/prefer-stateless-function": 0,
+        "react/jsx-filename-extention" : 0
+
+    },
     "parser": "babel-eslint"
 }
