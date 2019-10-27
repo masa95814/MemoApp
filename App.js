@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import BodyText from './src/elements/Text';
+import BodyText from './src/elements/BodyText';
 
 export default function App() {
   return (
