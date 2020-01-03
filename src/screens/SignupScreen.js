@@ -35,6 +35,7 @@ class SignupScreen extends React.Component {
           autoCapitalize="none"
           autoCorrect={false}
           placeholder="Email Adress"
+          underlineColorAndroid="transparent"
         />
         <TextInput
           style={styles.input}
@@ -44,6 +45,7 @@ class SignupScreen extends React.Component {
           autoCorrect={false}
           placeholder="Password"
           secureTextEntry
+          underlineColorAndroid="transparent"
         />
         <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)} underlayColor="#C70F66">
           <Text style={styles.buttonTitle}>送信する</Text>
