@@ -23,18 +23,6 @@ class MemoListScreen extends React.Component {
         // memoList: memoList と同義
         this.setState({ memoList });
       });
-      /* .get()
-      .then((snapshot) => {
-        const memoList = [];
-        snapshot.forEach((doc) => {
-          memoList.push({ ...doc.data(), key: doc.id });
-        });
-        // memoList: memoList と同義
-        this.setState({ memoList });
-      })
-      .catch((error) => {
-        console.log(error);
-      }); */
   }
 
   handlePress() {
