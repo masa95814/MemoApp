@@ -10,29 +10,38 @@ class MemoEditScreen extends React.Component {
     body: '',
     key: '',
   }
+
   componentWillMount() {
     const { params } = this.props.navigation.state;
     this.setState({
       body: params.memo.body,
-      key: params.memo.key
+      key: params.memo.key,
     });
   }
 
   handlePress() {
-    const { currentUser } = firebase.auth();
-    // const newDate = firebase.firestore.Timestamp.now(); // ← 正しくはこうです
-    // const docRef = db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key);
     const db = firebase.firestore();
-    db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key)
+    const { currentUser } = firebase.auth();
+    const newDate = firebase.firestore.Timestamp.now();
+    const docRef = db.collection(`users/${currentUser.uid}/memos`).doc(this.state.key);
+    docRef
       .update({
         body: this.state.body,
+        createdOn: newDate,
       })
       .then(() => {
-        console.log('success!');
+        this.setState({ body: this.state.body });
+        const { navigation } = this.props;
+        navigation.state.params.returnMemo({
+          body: this.state.body,
+          key: this.state.key,
+          createdOn: newDate,
+        });
+        navigation.goBack();
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   }
 
   render() {
