@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, TextInput } from 'react-native';
 
 import firebase from 'firebase';
 
@@ -45,7 +45,7 @@ class MemoEditScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="height" keyboardVerticalOffset={80}>
         <TextInput 
           style={styles.memoEditInput}
           multiline
@@ -55,7 +55,7 @@ class MemoEditScreen extends React.Component {
           textAlignVertical="top"
         />
         <CircleButton name="check" onPress={this.handlePress.bind(this)}/>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
