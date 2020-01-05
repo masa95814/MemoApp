@@ -1,27 +1,47 @@
 import React from 'react';
+import * as SecureStore from 'expo-secure-store';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity } from 'react-native';
 import firebase from 'firebase';
 import { NavigationActions, StackActions } from 'react-navigation';
+
+import Loading from '../elements/Loading';
 
 class LoginScreen extends React.Component {
   state = {
     email: '',
     password: '',
+    isLaoding: true,
+  }
+
+  /* async componentDidMount() {
+    const email = await Expo.SecureStore.getItemAsync('email');
+    const password = await Expo.SecureStore.getItemAsync('password');
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.setState({ isLaoding: false });
+        this.navigateToHome();
+      })
+      .catch();
+  } */
+
+  navigateToHome() {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home' }),
+      ],
+    });
+    this.props.navigation.dispatch(resetAction);
   }
 
   handleSubmit() {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-    .then(() => {
-      const resetAction = StackActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: 'Home' }),
-        ],
-      });
-      this.props.navigation.dispatch(resetAction);
-    })
-    .catch(() => {
-    })
+      .then(() => {
+        SecureStore.setItemAsync('email', this.state.email);
+        SecureStore.setItemAsync('password', this.state.password);
+        this.navigateToHome();
+      })
+      .catch();
   }
 
   handlePress() {
@@ -31,7 +51,8 @@ class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      <Text style={styles.title}>ログイン</Text>
+        <Loading text="ログイン中" isLoading={this.state.isLoading}/>
+        <Text style={styles.title}>ログイン</Text>
         <TextInput
           style={styles.input}
           value={this.state.email}
